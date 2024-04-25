@@ -3,8 +3,15 @@ package product;
 public class ProductModel {
     private String barCode;
     private String name;
-    private Integer priceInCents;
-    private Integer stock;
+    private int priceInCents;
+    private int stock;
+
+    public ProductModel (String barCode, String name, int priceInCents, int stock) {
+        this.barCode = barCode;
+        this.name = name;
+        this.priceInCents = priceInCents;
+        this.stock = stock;
+    }
 
     public String getBarCode() {
         return barCode;
@@ -18,19 +25,19 @@ public class ProductModel {
         this.name = name;
     }
 
-    public Integer getPriceInCents() {
+    public int getPriceInCents() {
         return priceInCents;
     }
 
-    public void setPriceInCents(Integer priceInCents) {
+    public void setPriceInCents(int priceInCents) {
         this.priceInCents = priceInCents;
     }
 
-    public Integer getStock() {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(Integer stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
 }

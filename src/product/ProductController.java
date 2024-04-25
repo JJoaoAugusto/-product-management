@@ -6,19 +6,14 @@ import exceptions.NegativeException;
 import exceptions.NotFoundException;
 
 public class ProductController {
-    protected ArrayList<ProductModel> products = new ArrayList<ProductModel>();
+    protected ArrayList<ProductModel> products = new ArrayList<>();
 
-    public void create(String name, int priceInCents, int stock) throws Exception {
+    public void create(ProductModel payload) throws Exception {
         try {
-            var product = new ProductModel();
-            product.setName(name);
-            if(priceInCents > 0) {
-                product.setPriceInCents(priceInCents);
-            } else {
+            if(payload.getPriceInCents() <= 0) {
                 throw new NegativeException();
             }
-            product.setStock(stock);
-            products.add(product);
+            var product = new ProductModel(payload.getBarCode(), payload.getName(), payload.getPriceInCents(), payload.getStock());
             System.out.println("Produto " + product.getName() + " foi adicionado com sucesso!");
         } catch (NegativeException e) {
             System.out.println(e.getMessage());
