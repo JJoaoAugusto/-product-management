@@ -8,12 +8,13 @@ import exceptions.NotFoundException;
 public class ProductController {
     protected ArrayList<ProductModel> products = new ArrayList<>();
 
-    public void create(ProductModel payload) throws Exception {
+    public void create(String barCode, String name, int priceInCents, int stock) throws Exception {
         try {
-            if(payload.getPriceInCents() <= 0) {
+            if(priceInCents <= 0) {
                 throw new NegativeException();
             }
-            var product = new ProductModel(payload.getBarCode(), payload.getName(), payload.getPriceInCents(), payload.getStock());
+            var product = new ProductModel(barCode, name, priceInCents, stock);
+            products.add(product);
             System.out.println("Produto " + product.getName() + " foi adicionado com sucesso!");
         } catch (NegativeException e) {
             System.out.println(e.getMessage());
@@ -39,19 +40,12 @@ public class ProductController {
 
     public void retrieve(String barCode) throws Exception {
         try {
-            if (products.size() <= 0) {
+            if (products.size() > 0) {
+                var product = products.stream().filter(p -> p.getBarCode().equals(barCode)).findFirst();
+                System.out.println(product);
+            } else {
                 throw new NotFoundException();
             }
-            var price = 0;
-            for (ProductModel product: products) {
-                if(product.getBarCode() == barCode) {
-                price = product.getPriceInCents();
-                }
-            }
-            if(price == 0) {
-                throw new NotFoundException();
-            }
-            System.out.println(price);
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         } catch (Exception e) {
